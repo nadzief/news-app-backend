@@ -14,7 +14,7 @@ const routes = require('./routes');
 
 const logInfo = require('./helper/logger').infolog
 
-const port = process.env.SERVERPORT;
+const port = process.env.PORT;
 
 // const authLogin = require('./routes/post/postLogin');
 const connection = require('./dbconnection')
