@@ -1,4 +1,4 @@
-const model = require('../../model/BeritaModel');
+const model = require('../../model/ModelUser');
 const uuid = require('../../helper/utility');
 const errLog = require('../../helper/logger').errorlog;
 var sha1 = require('sha1')
@@ -25,25 +25,24 @@ module.exports = (req, res) => {
     let imageConvertToURL = `http://localhost:${process.env.SERVERPORT}/v1/image/`+namaImage
     // let imageConvertToURL = `http://192.168.88.15:${process.env.SERVERPORT}/image/`+namaImage
     const id = uuid.getIdV4();
-    let title = data.title;
-    let content = data.content;
-    let category = data.id_category;
-    let author = data.author;
-    let status = data.status;
+    let nama = data.nama;
+    let email = data.email;
+    let username = data.username;
+    let password = data.password;
     
     (async () => {
 
-        console.log(id, title, content, category, author, namaImage, imageConvertToURL, status)
+        console.log(id, nama, email, username, password, namaImage, imageConvertToURL)
 
-        await model.storeN([id, title, content, category, author, namaImage, imageConvertToURL, status])
+        await model.postUser([id, nama, email, username, password, namaImage, imageConvertToURL])
 
         res.send({
-            message: "Berhasil menambahkan artikel"
+            message: "Berhasil menambahkan user"
         })
 
     })().catch(e => setImmediate(() => {
         console.log(e)
-        errLog.error("Error adding news", { 'err': e.message })
+        errLog.error("Error adding user", { 'err': e.message })
         res.status(500).send({ message: "Terjadi kesalahan pada system, hubungi andministrator!" })
     }))
 

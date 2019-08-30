@@ -78,12 +78,14 @@ routes.post('/post/adminRegister', RegisterAdmin);
 const postRegister = require('./post/postRegister');
 routes.post('/post/register', postRegister);
 
-// Login Admin
+// Login
 routes.post('/post/login', function(req, res){
     var username = req.body.username;
     var password = md5(req.body.password);
 
-    connection.query('SELECT * FROM tb_user WHERE username = $1', [username], function(error, results, fields){
+    // console.log(username, password);
+
+    connection.query('SELECT * FROM tb_admin WHERE username = $1', [username], function(error, results, fields){
         if (error) {
             console.log('error', error)
             res.send({
@@ -91,7 +93,7 @@ routes.post('/post/login', function(req, res){
                 'failed': 'login failed'
             })
         }else{
-            console.log(results.rows.length > 0)
+            // console.log(results.rows.length > 0)
             if(results.rows.length > 0){
                 console.log(password, results.rows[0].password)
                 if(md5(results.rows[0].password) == password){
@@ -133,7 +135,7 @@ routes.post('/post/login', function(req, res){
             console.log(results.rows.length > 0)
             if(results.rows.length > 0){
                 console.log(password, results.rows[0].password)
-                if(md5(results.rows[0].password) == password){
+                if(results.rows[0].password == password){
                     res.send({
                         'code': 200,
                         'success':'login success'
@@ -162,10 +164,21 @@ routes.post('/post/berita', newsUpload.array('images', 5), [
     check([
         'title',
         'content',
-        'category',
         'author'
     ]).exists()
 ], postBerita);
+
+// User
+const postUser = require('./post/postUser');
+routes.post('/post/user', newsUpload.array('image', 5), [
+    check([
+        'nama',
+        'email'
+    ]).exists()
+], postUser);
+
+const postCategory = require('./post/postCategory');
+routes.post('/post/category', postCategory);
 
 /**
  * NOTE: POST END
@@ -175,6 +188,9 @@ routes.post('/post/berita', newsUpload.array('images', 5), [
  * NOTE: GET START
  */
 
+// User
+const getUser = require('./get/getUser')
+routes.get(['/get/user/', '/get/user/:id'], getUser);
 
 // Berita
 const getBerita = require('./get/getBerita')
@@ -185,6 +201,10 @@ routes.get(['/get/beritaOne/', '/get/beritaOne/:id'], getBeritaOne);
 
 const getBeritaThree = require('./get/getBeritaThree')
 routes.get(['/get/beritaThree/', '/get/beritaThree/:id'], getBeritaThree);
+
+// category
+const getCategory = require('./get/getCategory')
+routes.get(['/get/category/', '/get/category/:id'], getCategory);
 
 const getImage = require('./get/getImage')
 routes.get(['/image/:image'], getImage)
@@ -200,6 +220,14 @@ routes.get(['/image/:image'], getImage)
 //Berita
 const deleteBerita = require('./delete/deleteBerita')
 routes.delete('/delete/berita/:id', deleteBerita)
+
+//User
+const deleteUser = require('./delete/deleteUser')
+routes.delete('/delete/user/:id', deleteUser)
+
+// Category
+const deleteCategory = require('./delete/deleteCategory')
+routes.delete('/delete/category/:id', deleteCategory)
 
 /**
 
@@ -217,9 +245,21 @@ routes.post('/edit/berita', newsUpload.array('images', 5), [
     check([
         'title',
         'content',
-        'category'
     ]).exists()
 ], editBerita)
+
+// User
+const editUser = require('./put/editUser')
+routes.post('/edit/user', newsUpload.array('image', 5), [
+    check([
+        'nama',
+        'username',
+    ]).exists()
+], editUser)
+
+// Category
+const editCategory = require('./put/editCategory')
+routes.post('/edit/category', editCategory);
 
 /**
  * NOTE: EDIT END

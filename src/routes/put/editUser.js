@@ -1,4 +1,4 @@
-const model = require('../../model/BeritaModel')
+const model = require('../../model/ModelUser')
 const { validationResult } = require('express-validator/check')
 const errLog = require('../../helper/logger').errorlog;
 const fs = require('fs')
@@ -47,34 +47,31 @@ module.exports = (req, res) => {
     // let imageConvertToURL = `http://localhost:${process.env.SERVERPORT}/image/`+namaImage;
 
     const id = data.id;
-    let title = data.title;
-    let content = data.content;
-    let category = data.id_category;
-    let author = data.author;
-    let status = data.status;
-    let update_by = 'SYS';
+    let nama = data.nama;
+    let email = data.email;
+    let username = data.username;
+    let password = data.password;
     
     (async () => {
 
-        // console.log(title, content, category, status_berita, imageConvertToURL, namaImage, update_by, id)
-        console.log(title, content, category, author, images, link_image, status, update_by, id)
+        console.log(nama, email, username, password, link_image, images, id)
 
         // const { rowCount } = await model.editN([title, content, category, status_berita, imageConvertToURL, namaImage, update_by, id])
-        const { rowCount } = await model.editN([title, content, category, author, images, link_image, status, update_by, id])
+        const { rowCount } = await model.editUser([nama, email, username, password, images, link_image, id])
         
         if (rowCount === 0) {
             res.status(404).send({
-                message: "Tidak ada artikel dengan id tersebut!"
+                message: "Tidak ada user dengan id tersebut!"
             })
         } else {
             res.send({
-                message: "Berhasil mengubah artikel"
+                message: "Berhasil mengubah data user"
             })
         }
 
     })().catch(e => setImmediate(() => {
         console.log(e)
-        errLog.error("Error editing news", { 'err': e.message })
+        errLog.error("Error editing user", { 'err': e.message })
         res.status(500).send({ message: "Something went wrong!" })
     }))
 
