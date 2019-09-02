@@ -32,7 +32,8 @@ module.exports = (req, res) => {
         //     if (err) throw err
         // })
         images = nama_image
-        link_image = (`http://localhost:${process.env.SERVERPORT}/v1/image/`+nama_image)
+        link_image = (`https://cryptic-mesa-74467.herokuapp.com/v1/image/`+nama_image)
+        // link_image = (`http://localhost:${process.env.SERVERPORT}/v1/image/`+nama_image)
     }else{
         images = old_image
         link_image = link_old_image

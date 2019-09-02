@@ -22,7 +22,8 @@ module.exports = (req, res) => {
         // console.log(photo.originalname)
         namaImage = photo.originalname
     })
-    let imageConvertToURL = `http://localhost:${process.env.SERVERPORT}/v1/image/`+namaImage
+    let imageConvertToURL = `https://cryptic-mesa-74467.herokuapp.com/v1/image/`+namaImage
+    // let imageConvertToURL = `http://localhost:${process.env.SERVERPORT}/v1/image/`+namaImage
     // let imageConvertToURL = `http://192.168.88.15:${process.env.SERVERPORT}/image/`+namaImage
     const id = uuid.getIdV4();
     let title = data.title;
