@@ -206,6 +206,10 @@ routes.get(['/get/beritaThree/', '/get/beritaThree/:id'], getBeritaThree);
 const getBeritaCategory = require('./get/getBeritaCategory')
 routes.get(['/get/beritaCategory/:id'], getBeritaCategory)
 
+// berita one category
+const getBeritaOneCategory = require('./get/getBeritaOneCategory')
+routes.get(['/get/beritaOneCategory'], getBeritaOneCategory);
+
 // category
 const getCategory = require('./get/getCategory')
 routes.get(['/get/category/', '/get/category/:id'], getCategory);
