@@ -6,21 +6,16 @@ module.exports = (req, res) => {
 
     const parsedUrl = url.parse(req.url, true);
     const query = parsedUrl.query;
-
-    // let category = query.category || '';
-    // category = category.toUpperCase();
-    // let keyword = query.keyword || '';
-    // keyword = keyword.toUpperCase();
-    // let from = query.from || 0;
     const id = req.params.id || '';
+
     (async() => {
 
         //get single news based on ID
         if (id !== '') {
-            let singleBerita = await model.getSN(id);
+            let singleBerita = await model.getOneNewsCategory(id);
             res.send(singleBerita.rows)
         } else {
-            let berita = await model.getOneNewsCategory();
+            let berita = await model.getN();
             res.send(berita.rows)
         }
 
