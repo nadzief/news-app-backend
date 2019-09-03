@@ -26,6 +26,11 @@ const getNThree = (payload) => {
     return pool.query("SELECT B.id, B.title, B.content, C.nama_category, B.author, B.images, B.link_image, B.status, B.created_date, B.updated_date, B.update_by FROM tb_berita AS B INNER JOIN tb_category AS C ON B.id_category = C.id ORDER BY B.created_date DESC LIMIT 3 ", payload);
 }
 
+// get berita by category
+const getNewsCategory = (id_category) => {
+    return pool.query("SELECT B.id, B.title, B.content, B.id_category, C.nama_category, B.author, B.images, B.link_image, B.status, B.created_date, B.updated_date, B.update_by FROM tb_berita AS B INNER JOIN tb_category AS C ON B.id_category = C.id WHERE B.id_category = $1", [id_category])
+}
+
 // edit berita
 const editN = (payload) => { 
     return pool.query('UPDATE tb_berita SET (title, content, id_category, author, images, link_image, status, update_by) = (COALESCE($1, title), COALESCE($2, content), $3, COALESCE($4, author), $5, $6, $7, $8) WHERE id = $9', payload)
@@ -44,6 +49,7 @@ module.exports = {
     'getSN': getSN,
     'getNOne': getNOne,
     'getNThree': getNThree,
+    'getNewsCategory': getNewsCategory,
     'storeN': storeN,
     'editN': editN,
     'editSN': editSN,

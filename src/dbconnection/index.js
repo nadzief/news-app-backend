@@ -8,4 +8,12 @@ const pool = pg.Pool({
     port : process.env.DBPORT
 });
 
+// const pool = pg.Pool({
+//     user : 'postgres',
+//     host : 'localhost',
+//     database : 'db_news',
+//     password : 'admin',
+//     port : 5432
+// });
+
 module.exports = pool;
