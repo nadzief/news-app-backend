@@ -33,7 +33,7 @@ const getNewsCategory = (id_category) => {
 
 // get one berita category
 const getOneNewsCategory = (id_category) => {
-    return pool.query("SELECT B.id, B.title, B.content, B.id_category, C.nama_category, B.author, B.images, B.link_image, B.status, B.created_date, B.updated_date, B.update_by FROM tb_berita AS B INNER JOIN tb_category AS C ON B.id_category = C.id WHERE B.id_category = $1 ORDER BY B.created_date DESC LIMIT 1", payload);
+    return pool.query("SELECT B.id, B.title, B.content, B.id_category, C.nama_category, B.author, B.images, B.link_image, B.status, B.created_date, B.updated_date, B.update_by FROM tb_berita AS B INNER JOIN tb_category AS C ON B.id_category = C.id WHERE B.id_category = $1 ORDER BY B.created_date DESC LIMIT 1", [id_category]);
 }
 
 // edit berita
